@@ -2,6 +2,11 @@
 
 - name: Verify
   hosts: molecule_hosts
-  gather_facts: no
+  gather_facts: yes
+  become: yes
   tasks:
-    - debug: msg="Verify to be done"
+    - name: Assert logical volume is correct
+      assert:
+        that:
+          - ansible_facts.lvm.lvs.lv is defined
+          - ansible_facts.lvm.lvs.lv.size_g == "0.50"

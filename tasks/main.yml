@@ -1,2 +1,65 @@
 ---
 # Role tasks
+
+- name: Setup logical volumes
+  lvol:
+    active: >-
+      {{ lvm_lv_volume.active
+         | default(lvm_lv_defaults.active)
+         | default(omit) }}
+    force: >-
+      {{ lvm_lv_volume.force
+         | default(lvm_lv_defaults.force)
+         | default(omit) }}
+    lv: >-
+      {{ lvm_lv_volume.lv
+         | default(lvm_lv_defaults.lv)
+         | default(omit) }}
+    opts: >-
+      {{ lvm_lv_volume.opts
+         | default(lvm_lv_defaults.opts)
+         | default(omit) }}
+    pvs: >-
+      {{ lvm_lv_volume.pvs
+         | default(lvm_lv_defaults.pvs)
+         | default(omit) }}
+    resizefs: >-
+      {{ lvm_lv_volume.resizefs
+         | default(lvm_lv_defaults.resizefs)
+         | default(omit) }}
+    shrink: >-
+      {{ lvm_lv_volume.shrink
+         | default(lvm_lv_defaults.shrink)
+         | default(omit) }}
+    size: >-
+      {{ lvm_lv_volume.size
+         | default(lvm_lv_defaults.size)
+         | default(omit) }}
+    snapshot: >-
+      {{ lvm_lv_volume.snapshot
+         | default(lvm_lv_defaults.snapshot)
+         | default(omit) }}
+    state: >-
+      {{ lvm_lv_volume.state
+         | default(lvm_lv_defaults.state)
+         | default(omit) }}
+    thinpool: >-
+      {{ lvm_lv_volume.thinpool
+         | default(lvm_lv_defaults.thinpool)
+         | default(omit) }}
+    vg: >-
+      {{ lvm_lv_volume.vg
+         | default(lvm_lv_defaults.vg)
+         | default(omit) }}
+  loop: "{{ lvm_lv_volumes_to_manage }}"
+  loop_control:
+    loop_var: lvm_lv_volume
+    label: "{{ lvm_lv_volume.vg }} / {{ lvm_lv_volume.lv }}"
+
+  vars:
+    lvm_lv_volumes_to_manage: >-
+      {{ lvm_lv
+         + ((lvm_lv_load_from_hostvars | bool)
+          | ternary(lvm_lv_hostvars | default([]) | flatten, [])) }}
+  tags:
+    - role::lvm_lv
