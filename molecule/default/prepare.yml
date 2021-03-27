@@ -3,5 +3,27 @@
 - name: Prepare
   hosts: molecule_hosts
   gather_facts: no
+  become: yes
   tasks:
-    - debug: msg="Preparation tasks"
+    - name: Install required packages
+      package:
+        name: lvm2
+        state: present
+
+    - name: Setup pvm
+      parted:
+        align: optimal
+        device: /dev/sdb
+        number: 1
+        part_type: primary
+        part_start: 0%
+        part_end: 100%
+        flags: [ lvm ]
+        state: present
+
+    - name: Setup LVM volume group
+      lvg:
+        vg: testing
+        pvs: /dev/sdb1
+        pesize: "4"
+        state: present
