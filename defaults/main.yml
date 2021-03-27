@@ -1,2 +1,28 @@
 ---
 # Role default lower priority variables
+
+# List of dicts with logical volumes to configure. The dicts have the same
+# attributes that the ones expected by the ansible lvol module. For example:
+#
+# lvm_lv:
+#   - vg: firefly
+#     lv: test
+#     size: 512
+#     pvs: /dev/sda,/dev/sdb
+#
+
+lvm_lv: []
+
+# Dicitionary with the defaults options to use if no other ones are specified in
+# the `lvm_lv` variable. The members of the dict are the same attributes
+# that the ones expected by the ansible lvol module
+
+lvm_lv_defaults:
+  state: present
+
+# Indicate `lvm_lv` must be loaded also from host variables. Any host variable
+# that begins with "lvm_lv_*" and contains the necessary attributes
+# will be loaded as an item to manage by the role. The variables must follow the
+# structure detailed before for `lvm_lv`
+
+lvm_lv_load_from_hostvars: no
