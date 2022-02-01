@@ -10,6 +10,6 @@ https://semver.org/spec/v2.0.0.html
 
 ## [Unreleased]
 
-## [1.1.0] - 2022-01-27
+## [1.1.0] - 2022-02-01
 ### Changed
 - Supported distros. Related to ansible/main#178
