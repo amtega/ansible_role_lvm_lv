@@ -2,7 +2,7 @@
 # Role tasks
 
 - name: Setup logical volumes
-  lvol:
+  community.general.lvol:
     active: >-
       {{ lvm_lv_volume.active
          | default(lvm_lv_defaults.active)
@@ -55,7 +55,6 @@
   loop_control:
     loop_var: lvm_lv_volume
     label: "{{ lvm_lv_volume.vg }} / {{ lvm_lv_volume.lv }}"
-
   vars:
     lvm_lv_volumes_to_manage: >-
       {{ lvm_lv

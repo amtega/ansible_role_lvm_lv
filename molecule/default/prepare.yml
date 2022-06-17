@@ -6,12 +6,12 @@
   become: yes
   tasks:
     - name: Install required packages
-      package:
+      ansible.builtin.package:
         name: lvm2
         state: present
 
     - name: Setup pvm
-      parted:
+      ansible.builtin.parted:
         align: optimal
         device: /dev/sdb
         number: 1
@@ -22,7 +22,7 @@
         state: present
 
     - name: Setup LVM volume group
-      lvg:
+      ansible.builtin.lvg:
         vg: testing
         pvs: /dev/sdb1
         pesize: "4"
