@@ -6,7 +6,7 @@
   become: yes
   tasks:
     - name: Assert logical volume is correct
-      assert:
+      ansible.builtin.assert:
         that:
           - ansible_facts.lvm.lvs.lv is defined
           - ansible_facts.lvm.lvs.lv.size_g == "0.50"
